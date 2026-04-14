@@ -1,0 +1,648 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madew Burger's | Premium Burger House</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="toast-container"></div>
+
+  <header class="navbar">
+  <div class="navbar-top">
+    <div class="navbar-top-spacer" aria-hidden="true"></div>
+    <div class="brand-wordmark" aria-label="Madew Burgers">
+      <span class="brand-name brand-name-white">Madew</span>
+      <span class="brand-name brand-name-orange">Burgers</span>
+    </div>
+    <div class="nav-actions">
+      <button class="header-icon-btn" id="menu-toggle" type="button" aria-label="Buka menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-mini-popup" id="support-mini-popup" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <nav class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#menu">Menu</a>
+    <a href="#minuman">Minuman</a>
+    <a href="#rating">Rating</a>
+    <a href="#" id="account-link">Akun</a>
+    <a href="#" id="history-link" class="hidden">Riwayat</a>
+  </nav>
+</header>
+
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<aside class="side-drawer" id="side-drawer" aria-label="Menu samping">
+  <div class="side-drawer-head">
+    <div>
+      <span class="drawer-kicker">Menu</span>
+      <h3>Atur tampilan & bantuan</h3>
+    </div>
+    <button class="close-btn drawer-close" id="close-drawer" type="button" aria-label="Tutup menu">×</button>
+  </div>
+
+  <button class="drawer-item" id="theme-toggle" type="button">
+    <span class="drawer-item-icon" aria-hidden="true">☀️</span>
+    <span class="drawer-item-copy">
+      <strong id="theme-toggle-title">Turn on light mode</strong>
+      <small id="theme-toggle-subtitle">Ganti tampilan website</small>
+    </span>
+  </button>
+
+  <button class="drawer-item" id="open-support-chat" type="button">
+    <span class="drawer-item-icon" aria-hidden="true">💬</span>
+    <span class="drawer-item-copy">
+      <strong>Layanan kami</strong>
+      <small>Chat bantuan pesanan</small>
+    </span>
+  </button>
+
+  <a class="drawer-item drawer-link drawer-social" href="https://www.instagram.com/amrltvnsyh?igsh=MXN4d3NmZWQwbmFvbg==" target="_blank" rel="noopener noreferrer">
+    <span class="drawer-item-icon drawer-instagram-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/>
+        <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="2"/>
+        <circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/>
+      </svg>
+    </span>
+    <span class="drawer-item-copy">
+      <strong>Contact us</strong>
+      <small>Instagram resmi kami</small>
+    </span>
+  </a>
+</aside>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-badge">🍔 Selamat datang di website kami</div>
+        <h1>Madew Burger's</h1>
+        <p>
+          Nikmati burger premium, minuman segar, cart yang aktif, voucher ongkir yang cakep,
+          dan pengantaran yang terasa lebih realistis.
+        </p>
+        <div class="hero-buttons">
+          <a href="#menu" class="btn btn-primary">Lihat Menu</a>
+          <button class="btn btn-outline" id="open-login-from-hero" type="button">Masuk Sekarang</button>
+        </div>
+        <div class="hero-chips" aria-label="Keunggulan layanan">
+          <span class="hero-chip">Pelayanan cepat</span>
+          <span class="hero-chip">Ongkir murah</span>
+          <span class="hero-chip">Burger premium</span>
+          <span class="hero-chip">Checkout simpel</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+  <div class="promo-carousel" id="promo-carousel" aria-label="Banner promo Madew Burgers">
+    <div class="promo-carousel-track" id="promo-carousel-track">
+      <article class="promo-slide promo-slide-one">
+        <div class="promo-slide-kicker">Promo spesial minggu ini</div>
+        <h3>Masukkan kode <strong>MADEW1234</strong></h3>
+        <p>Diskon <strong>15%</strong> untuk minimal pembelian <strong>Rp 200.000</strong>.</p>
+      </article>
+      <article class="promo-slide promo-slide-two">
+        <div class="promo-slide-kicker">Ongkir super aman</div>
+        <h3>Free ongkir tak terbatas</h3>
+        <p>Berlaku hingga <strong>15 April</strong> untuk pemesanan yang memenuhi syarat.</p>
+      </article>
+      <article class="promo-slide promo-slide-three">
+        <div class="promo-slide-kicker">Kolaborasi seru</div>
+        <h3>Madew Burgers x Aldi's Burger</h3>
+        <p>Kolaborasi spesial dengan cita rasa baru yang siap bikin penasaran.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+    <section class="section section-alt" id="menu">
+      <div class="section-head">
+        <h2>Menu Makanan</h2>
+        <p>Pilihan burger dan makanan favorit yang bikin lapar makin jadi.</p>
+      </div>
+      <div id="food-container" class="grid"></div>
+    </section>
+
+    <section class="section" id="minuman">
+      <div class="section-head">
+        <h2>Menu Minuman</h2>
+        <p>Teman terbaik buat burger kamu.</p>
+      </div>
+      <div id="drink-container" class="grid"></div>
+    </section>
+
+    <section class="section section-alt" id="rating">
+      <div class="section-head">
+        <h2>Rating Pelanggan</h2>
+        <p>Beberapa ulasan dari pelanggan yang sudah coba.</p>
+      </div>
+      <div id="ratings-container" class="ratings-grid"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    © 2026 Madew Burger's. All rights reserved.
+  </footer>
+
+  <button class="cart-fab cart-nav-btn" id="cart-btn" type="button" aria-label="Buka keranjang">
+    <span class="cart-icon" aria-hidden="true">🛒</span>
+    <span id="cart-count" class="cart-count">0</span>
+  </button>
+
+  <div class="modal" id="auth-modal">
+  <div class="modal-card modal-small auth-modal-card">
+    <div class="modal-header">
+      <div>
+        <div class="auth-icon">🔐</div>
+        <h2 id="auth-modal-title">Masuk ke Madew Burger's</h2>
+        <p class="modal-subtitle" id="auth-modal-subtitle">Login dulu biar bisa pesan dan lihat riwayat.</p>
+      </div>
+      <button class="close-btn" id="close-auth" type="button">×</button>
+    </div>
+
+    <div class="auth-tabs" role="tablist" aria-label="Opsi autentikasi">
+      <button class="auth-tab active" id="auth-tab-login" type="button" data-auth-tab="login">Login</button>
+      <button class="auth-tab" id="auth-tab-register" type="button" data-auth-tab="register">Daftar</button>
+      <button class="auth-tab" id="auth-tab-verify" type="button" data-auth-tab="verify">Verifikasi OTP</button>
+    </div>
+
+    <div class="auth-view" id="auth-login-view">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="login-email" placeholder="nama@email.com" autocomplete="email" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="login-password" placeholder="Masukkan password" autocomplete="current-password" />
+      </div>
+      <button class="btn btn-primary full" id="login-submit" type="button">Login & Kirim OTP</button>
+      <p class="auth-hint">Setelah password cocok, kode OTP akan dikirim ke email terdaftar.</p>
+    </div>
+
+    <div class="auth-view hidden" id="auth-register-view">
+      <div class="form-group">
+        <label>Nama</label>
+        <input type="text" id="register-name" placeholder="Masukkan nama kamu" autocomplete="name" />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="register-email" placeholder="nama@email.com" autocomplete="email" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="register-password" placeholder="Buat password" autocomplete="new-password" />
+      </div>
+      <div class="form-group">
+        <label>Konfirmasi Password</label>
+        <input type="password" id="register-confirm" placeholder="Ulangi password" autocomplete="new-password" />
+      </div>
+      <button class="btn btn-primary full" id="register-submit" type="button">Daftar & Kirim OTP</button>
+    </div>
+
+    <div class="auth-view hidden" id="auth-verify-view">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="verify-email" placeholder="nama@email.com" autocomplete="email" />
+      </div>
+      <div class="form-group">
+        <label>Kode OTP</label>
+        <input type="text" id="verify-otp" placeholder="6 digit kode" inputmode="numeric" maxlength="6" autocomplete="one-time-code" />
+      </div>
+      <button class="btn btn-primary full" id="verify-submit" type="button">Verifikasi OTP</button>
+      <button class="btn btn-soft full auth-back-btn" id="auth-back-btn" type="button">Kembali ke Login</button>
+      <p class="auth-hint">Kode OTP dikirim lewat email dan akan kedaluwarsa beberapa menit.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="cart-modal">
+
+    <div class="modal-card cart-card">
+      <div class="modal-header">
+        <div>
+          <h2>Cart Kamu</h2>
+          <p class="modal-subtitle">Atur jumlah, voucher ongkir, dan checkout dari sini.</p>
+        </div>
+        <button class="close-btn" id="close-cart" type="button">×</button>
+      </div>
+
+      <div id="cart-empty" class="empty-state hidden">
+        Cart masih kosong. Tambahkan menu dulu.
+      </div>
+
+      <div id="cart-items" class="cart-list"></div>
+
+      <div class="cart-voucher-panel">
+        <div class="voucher-head">
+          <div>
+            <div class="mini-label">Voucher Ongkir</div>
+            <h4 id="ship-voucher-text">Belum ada voucher ongkir</h4>
+          </div>
+          <span id="ship-voucher-badge" class="voucher-badge">Tidak ada</span>
+        </div>
+
+        <div class="voucher-grid">
+          <button class="voucher-card" type="button" data-ship-voucher="ONGKIR10">
+            <span class="voucher-icon">🚚</span>
+            <strong>ONGKIR10</strong>
+            <small>Potong ongkir Rp10.000</small>
+          </button>
+        </div>
+
+        <div class="voucher-input-row">
+          <input type="text" id="ship-voucher-code" placeholder="Masukkan voucher ongkir" />
+          <button class="btn btn-soft" id="apply-ship-voucher-btn" type="button">Terapkan</button>
+        </div>
+      </div>
+
+      <div class="cart-summary">
+        <div class="summary-row"><span>Subtotal</span><strong id="cart-subtotal">Rp 0</strong></div>
+        <div class="summary-row"><span>Diskon promo</span><strong id="cart-item-discount">-Rp 0</strong></div>
+        <div class="summary-row"><span>Ongkir awal</span><strong id="cart-shipping-base">Rp 0</strong></div>
+        <div class="summary-row"><span>Diskon ongkir</span><strong id="cart-shipping-voucher">-Rp 0</strong></div>
+        <div class="summary-row total"><span>Total akhir</span><strong id="cart-grand-total">Rp 0</strong></div>
+      </div>
+
+      <div class="cart-payment">
+        <div class="mini-label">Promo Item</div>
+
+        <div class="voucher-input-row">
+          <input type="text" id="promo-code" placeholder="Masukkan kode promo" />
+          <button class="btn btn-soft" id="apply-promo-btn" type="button">Terapkan</button>
+        </div>
+
+        <small id="promo-status">Tidak ada promo aktif.</small>
+        <div id="promo-badge" class="promo-badge">Promo belum aktif</div>
+
+        <div class="form-group">
+          <label>Metode Pembayaran</label>
+          <div class="pay-methods">
+            <label class="pay-option">
+              <input type="radio" name="payment-method" value="Cash" checked />
+              <span>Cash</span>
+            </label>
+            <label class="pay-option">
+              <input type="radio" name="payment-method" value="QRIS" />
+              <span>QRIS</span>
+            </label>
+          </div>
+        </div>
+
+        <div id="qris-box" class="qris-box hidden">
+          <div class="qris-preview">
+            <img id="qris-image" alt="QRIS Dummy" />
+          </div>
+          <p class="qris-note">Scan QR ini untuk pembayaran. Tampilan ini hanya gimmick untuk demo.</p>
+          <div class="form-group">
+            <label>Upload Bukti Pembayaran</label>
+            <input type="file" id="payment-proof" accept="image/*" />
+            <small id="proof-name">Belum ada file dipilih.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="cart-actions-bottom">
+        <button class="btn btn-primary full" id="checkout-btn" type="button">Checkout & Mulai Pengantaran</button>
+        <button class="btn btn-ghost full" id="clear-cart-btn" type="button">Kosongkan Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="delivery-modal">
+    <div class="modal-card delivery-card">
+      <div class="modal-header">
+        <div>
+          <h2>Pengantaran Sedang Berjalan</h2>
+          <p class="modal-subtitle">Kurir sedang menuju lokasi kamu.</p>
+        </div>
+        <button class="close-btn" id="close-delivery" type="button">×</button>
+      </div>
+
+      <div class="delivery-top">
+        <div class="courier-card">
+          <div class="courier-avatar">🛵</div>
+          <div class="courier-info">
+            <span class="courier-label">Kurir aktif</span>
+            <h4 id="delivery-driver-name">-</h4>
+            <p id="delivery-driver-vehicle">-</p>
+            <p id="delivery-driver-plate">-</p>
+          </div>
+        </div>
+
+        <div class="delivery-stats">
+          <div class="stat-card"><span>Status</span><strong id="delivery-status-text">Menyiapkan pesanan</strong></div>
+          <div class="stat-card"><span>Sisa jarak</span><strong id="delivery-distance">-</strong></div>
+          <div class="stat-card"><span>Estimasi</span><strong id="delivery-eta">-</strong></div>
+          <div class="stat-card delivery-location-card">
+            <span>Kita lagi dimana</span>
+            <strong id="delivery-location-name">Memuat lokasi...</strong>
+            <small id="delivery-gps-text">-</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="delivery-progress">
+        <div id="delivery-progress-bar"></div>
+      </div>
+
+      <div class="delivery-steps">
+        <div class="delivery-step active" id="delivery-step-0">Dikonfirmasi</div>
+        <div class="delivery-step" id="delivery-step-1">Cari driver</div>
+        <div class="delivery-step" id="delivery-step-2">Diambil kurir</div>
+        <div class="delivery-step" id="delivery-step-3">Menuju lokasi</div>
+      </div>
+
+      <div class="map-shell">
+        <div id="delivery-map"></div>
+        
+        <div id="cooking-popup" class="cooking-popup hidden">
+  <div class="cooking-scene" aria-hidden="true">
+    <div class="cooking-flame"></div>
+    <div class="cooking-pan">
+      <div class="pan-handle"></div>
+      <div class="burger-stack">
+        <span class="burger-top"></span>
+        <span class="burger-sesame"></span>
+        <span class="burger-lettuce"></span>
+        <span class="burger-patty"></span>
+        <span class="burger-cheese"></span>
+        <span class="burger-bottom"></span>
+      </div>
+      <div class="steam steam-one"></div>
+      <div class="steam steam-two"></div>
+      <div class="steam steam-three"></div>
+    </div>
+  </div>
+  <h3>Burger lagi dimasak di wajan panas</h3>
+  <p>Api menyala, bun hangat, dan burger sedang disiapkan agar terasa lebih realistis. Tunggu sebentar ya (<span id="cooking-countdown">10</span> detik)</p>
+</div>
+
+<div id="driver-search-panel" class="driver-search-panel hidden">
+          <div class="driver-search-head">
+            <div>
+              <div class="driver-search-kicker">Driver sekitar resto</div>
+              <h3 id="driver-search-title">Mencari driver terdekat...</h3>
+            </div>
+            <div class="driver-search-badge" id="driver-search-count">0 driver</div>
+          </div>
+          <p class="driver-search-subtitle" id="driver-search-subtitle">Map sedang memindai area sekitar resto dengan animasi yang lebih halus.</p>
+          <div id="nearby-driver-list" class="driver-search-grid"></div>
+        </div>
+
+        <div class="map-hud">
+          <span class="hud-pill">Live tracking</span>
+          <span class="hud-pill hud-pill-soft">Lokasi kamu ditandai jelas</span>
+          <span id="delivery-note">
+            <span class="story-emoji cooking-emoji">🍔</span>
+            <span class="story-copy">Pesanan sedang dimasak di resto. Lokasi kamu nanti muncul jelas di peta begitu kurir jalan.</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="delivery-reminder-modal" class="delivery-reminder-toast" role="dialog" aria-modal="false" aria-labelledby="delivery-reminder-title">
+    <button class="delivery-reminder-card" type="button" id="delivery-reminder-continue">
+      <span class="delivery-reminder-badge">Tracking disembunyikan</span>
+      <span class="delivery-reminder-copy">
+        <strong id="delivery-reminder-title">Driver masih jalan menuju lokasi kamu</strong>
+        <small id="delivery-reminder-message">Ketuk banner ini untuk balik ke layar pengantaran dan pantau kurir lagi.</small>
+      </span>
+      <span class="delivery-reminder-arrow" aria-hidden="true">↩</span>
+    </button>
+    <button class="delivery-reminder-close" id="close-delivery-reminder" type="button" aria-label="Tutup pengingat">×</button>
+  </div>
+
+  <div class="modal" id="history-modal">
+    <div class="modal-card modal-small">
+      <div class="modal-header">
+        <div>
+          <h2>Riwayat Pemesanan</h2>
+          <p class="modal-subtitle">Pesanan yang sudah selesai diantar.</p>
+        </div>
+        <button class="close-btn" id="close-history" type="button">×</button>
+      </div>
+
+      <div id="history-list" class="history-list"></div>
+
+      <div class="history-footer-actions">
+        <button class="btn btn-ghost full" id="close-history-btn" type="button">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="receipt-modal">
+    <div class="modal-card modal-small receipt-modal-card">
+      <div class="modal-header">
+        <div>
+          <h2>Bukti Pembayaran</h2>
+          <p class="modal-subtitle">Struk sederhana dari pesanan yang sudah selesai.</p>
+        </div>
+        <button class="close-btn" id="close-receipt" type="button">×</button>
+      </div>
+
+      <div id="receipt-detail"></div>
+
+      <button class="btn btn-ghost full" id="close-receipt-btn" type="button">Tutup</button>
+    </div>
+  </div>
+
+  <div class="modal" id="profile-modal">
+    <div class="modal-card profile-modal-card">
+      <div class="modal-header">
+        <div>
+          <h2>Akun Saya</h2>
+          <p class="modal-subtitle">Profil, deskripsi, foto, dan hitungan pesanan yang sudah kamu buat.</p>
+        </div>
+        <button class="close-btn" id="close-profile" type="button">×</button>
+      </div>
+
+      <div class="profile-layout">
+        <div class="profile-hero-card">
+          <div class="profile-avatar-large-wrap">
+            <img id="profile-preview" class="profile-avatar-large" alt="Preview profil" />
+            <div id="profile-preview-fallback" class="profile-avatar-large-fallback">👤</div>
+          </div>
+          <div class="profile-summary-copy">
+            <span class="profile-kicker">Akun aktif</span>
+            <h3 id="profile-modal-name">Guest</h3>
+            <p id="profile-modal-status">Belum login.</p>
+            <div class="profile-stats">
+              <div class="profile-stat">
+                <span>Pesanan selesai</span>
+                <strong id="profile-order-count">0</strong>
+              </div>
+              <div class="profile-stat">
+                <span>Total belanja</span>
+                <strong id="profile-order-total">Rp0</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-form-card">
+          <div class="form-group">
+            <label>Nama pengguna</label>
+            <input type="text" id="profile-username" placeholder="Masukkan nama profil" />
+          </div>
+          <div class="form-group">
+            <label>Deskripsi profil</label>
+            <textarea id="profile-bio" rows="4" placeholder="Tulis deskripsi singkat tentang kamu..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Ganti foto profil</label>
+            <div class="profile-upload-actions">
+              <button class="btn btn-soft profile-upload-btn" id="open-gallery-btn" type="button">Pilih dari galeri</button>
+              <button class="btn btn-soft profile-upload-btn" id="open-camera-btn" type="button">Pakai kamera</button>
+            </div>
+            <input type="file" id="profile-gallery-input" accept="image/*" hidden />
+            <input type="file" id="profile-camera-input" accept="image/*" capture="environment" hidden />
+            <small id="profile-image-name">Belum ada gambar dipilih.</small>
+          </div>
+          <div class="profile-actions">
+            <button class="btn btn-primary" id="save-profile-btn" type="button">Simpan Profil</button>
+            <button class="btn btn-ghost" id="reset-profile-btn" type="button">Hapus Foto</button>
+          </div>
+          <div class="profile-account-actions">
+            <button class="btn btn-danger full" id="profile-logout-btn" type="button">Log out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="delete-confirm-modal">
+    <div class="modal-card modal-small confirm-modal-card">
+      <div class="modal-header">
+        <div>
+          <h2>Yakin mau hapus?</h2>
+          <p class="modal-subtitle" id="delete-confirm-text">Aksi ini akan menghapus bukti pembayaran dari riwayat.</p>
+        </div>
+        <button class="close-btn" id="close-delete-confirm" type="button">×</button>
+      </div>
+
+      <div class="confirm-actions">
+        <button class="btn btn-ghost full" id="cancel-delete-btn" type="button">Batal</button>
+        <button class="btn btn-primary full" id="confirm-delete-btn" type="button">Ya, hapus</button>
+      </div>
+    </div>
+  </div>
+
+<div class="modal" id="completion-modal">
+  <div class="completion-card" role="dialog" aria-modal="true" aria-labelledby="completion-title">
+    <button class="close-btn completion-close" id="close-completion" type="button">×</button>
+    <div class="completion-glow"></div>
+    <div class="completion-stage">
+      <div class="completion-pack">📦</div>
+      <div class="completion-plate">🍔🍽️</div>
+      <div class="completion-pack">📦</div>
+    </div>
+    <div class="completion-badge">Pesanan sudah sampai</div>
+    <h2 id="completion-title">Burger hangat sudah diantar!</h2>
+    <p id="completion-location">Disajikan hangat, rapi, dan siap dinikmati.</p>
+    <div class="completion-meta" id="completion-driver">Packaging cantik dari Madew Burgers sudah ikut sampai.</div>
+    <div class="completion-sub">Terima kasih sudah pesan di Madew Burgers. Selamat makan!</div>
+    <button class="btn btn-primary full completion-continue" id="completion-continue" type="button">Lanjutkan</button>
+  </div>
+</div>
+
+<div class="modal" id="review-modal">
+
+    <div class="modal-card modal-small review-modal-card">
+      <div class="modal-header">
+        <div>
+          <div class="review-kicker">Luxury rating</div>
+          <h2>Rating Driver & Restoran</h2>
+          <p class="modal-subtitle">Kasih nilai setelah pesanan sampai.</p>
+        </div>
+        <button class="close-btn" id="close-review" type="button">×</button>
+      </div>
+
+      <div class="review-summary" id="review-summary"></div>
+
+      <div class="form-group">
+        <label>Rating Restoran</label>
+        <div class="star-picker" id="restaurant-rating-stars"></div>
+        <small id="restaurant-rating-text">Belum dinilai.</small>
+      </div>
+
+      <div class="form-group">
+        <label>Rating Driver</label>
+        <div class="star-picker" id="driver-rating-stars"></div>
+        <small id="driver-rating-text">Belum dinilai.</small>
+      </div>
+
+      <div class="form-group">
+        <label>Kesan Pengantaran</label>
+        <select id="review-issue">
+          <option value="Pesanan lengkap dan enak">Pesanan lengkap dan enak</option>
+          <option value="Makanan kurang baik">Makanan kurang baik</option>
+          <option value="Driver lama">Driver lama</option>
+          <option value="Kemasan kurang rapi">Kemasan kurang rapi</option>
+          <option value="Layanan sangat memuaskan">Layanan sangat memuaskan</option>
+          <option value="Lainnya">Lainnya</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Catatan tambahan</label>
+        <textarea id="review-note" rows="4" placeholder="Tulis pengalamanmu..."></textarea>
+      </div>
+
+      <button class="btn btn-primary full" id="submit-review-btn" type="button">Kirim Rating</button>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+  <div class="modal" id="support-modal">
+    <div class="support-card" role="dialog" aria-modal="true" aria-labelledby="support-title">
+      <div class="support-card-head">
+        <div class="support-title-stack">
+          <span class="support-kicker">Layanan kami</span>
+          <h2 id="support-title">Chat bantuan pesanan</h2>
+          <p id="support-subtitle">Pilih nomor ticket dari riwayat pesananmu, lalu jawab pertanyaan singkat yang relevan.</p>
+        </div>
+        <button class="close-btn" id="close-support" type="button" aria-label="Tutup chat bantuan">×</button>
+      </div>
+
+      <div class="support-session-bar">
+        <div class="support-session-chip" id="support-ticket-chip">Ticket: belum dipilih</div>
+        <div class="support-session-chip support-session-chip-soft" id="support-eta-chip">Estimasi admin: 1 menit</div>
+      </div>
+
+      <div class="support-chat-shell">
+        <div class="support-chat-log" id="support-chat-log"></div>
+        <div class="support-chat-options" id="support-chat-options"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="support-update-modal">
+    <div class="support-update-card" role="dialog" aria-modal="true" aria-labelledby="support-update-title">
+      <div class="support-update-badge">Update dari admin</div>
+      <h3 id="support-update-title">Ada masalah</h3>
+      <p id="support-update-text">Status tiket kamu sudah diperbarui.</p>
+      <div class="support-update-actions">
+        <button class="btn btn-primary full" id="close-support-update" type="button">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
